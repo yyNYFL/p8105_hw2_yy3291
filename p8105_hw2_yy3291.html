@@ -698,6 +698,16 @@ summary(mr_trash_wheel)</code></pre>
 ##  3rd Qu.:41.54  
 ##  Max.   :62.00  
 ##  NA&#39;s   :2</code></pre>
+<pre class="r"><code>sum(professor_trash_wheel$weight_tons)</code></pre>
+<pre><code>## [1] 216.26</code></pre>
+<pre class="r"><code>#The total weight of trash collected by Professor Trash Wheel for all available data was 216.26 tons. 
+sum_cb &lt;- filter(gwynda_trash_wheel, year == 2021, month == &quot;July&quot;)
+sum(sum_cb$cigarette_butts)</code></pre>
+<pre><code>## [1] 16300</code></pre>
+<pre class="r"><code># In July of 2021 the total number of cigarette bitts collected by the Gwynnda Trash Wheel was 163,000.</code></pre>
+<div id="section" class="section level3">
+<h3></h3>
+</div>
 </div>
 
 

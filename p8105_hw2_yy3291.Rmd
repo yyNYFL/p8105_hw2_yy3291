@@ -124,5 +124,13 @@ professor_trash_wheel = janitor::clean_names(professor_trash_wheel) |>
 summary(mr_trash_wheel)
 summary(gwynda_trash_wheel)
 summary(professor_trash_wheel)
+sum(professor_trash_wheel$weight_tons)
+#The total weight of trash collected by Professor Trash Wheel for all available data was 216.26 tons. 
+sum_cb <- filter(gwynda_trash_wheel, year == 2021, month == "July")
+sum(sum_cb$cigarette_butts)
+# In July of 2021 the total number of cigarette bitts collected by the Gwynnda Trash Wheel was 163,000.
+
+
 ```
 
+### 
