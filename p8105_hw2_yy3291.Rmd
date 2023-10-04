@@ -26,7 +26,7 @@ month_df =
     month = month.name
   )
 
-# I need to figure out a good reltive path for my files using the here package
+# I need to figure out a good relative path for my files using the here package
 
 here()
 here::here("pols-month.csv")
@@ -82,3 +82,47 @@ summary(data_538)
 ```
 
 ### The combined dataset, data_538, has merged the pols data, which provides information on the number of national politicians who are democratic or republican at any given time, the snp data, which is related to Standard & Poor’s stock market index (S&P), often used as a representative measure of stock market as a whole, and the unemployment data which contains information on the percentage of unemployment in a given month of an assocaited year. The first thing I notice upon viewing the data is that there are quite a few NA's or missing variables in the variables close and unemployment (36 and 12 respectively). In the snp data frame there are 787 observations of 3 variables and the year vriable contains values from 1950 to 2015 and the close variables which represents the closing values of the S&P stock index at a given data has a min of 17.05 a median of 138.53 and a max of 2107.39. The pols datafram has 822 observations of 11 variables with data from the years 1947 to 2015. The unemployment data frame has 816 observations of 3 variables with data from the years 1948 to 2015. The data shows a minimum unemployment percentage of 2.5 and a maximum of 10.8. The combined data set, data_538 has 822 observations of 13 variables with data from the years 1947 to 2015.
+
+# Problem 2
+
+```{r}
+# Here I am reading the excel file that contains the data on Mr Trash Can dumpster. I am using the arguments in read_excel specifically range to exclude the two columns 15 and 16 that contain irrelevant notes, I am also using the range argument to exclude the bottom row that contains summary figures. 
+mr_trash_wheel = 
+  readxl::read_excel(
+    here("Mr Trash Wheel.xlsx"), sheet = NULL, range = "A2:N586", col_names = TRUE, col_types = NULL, na = "NA",   trim_ws = TRUE) 
+mr_trash_wheel = janitor::clean_names(mr_trash_wheel)
+
+# Here I am fixing the homes_powered variable so that it is applied ot every row in the dataset because before there were many 0's. From the Homes powered note that states each ton of trash equates to on average 500 kilowatts of electricity.  An average household will use 30 kilowatts per day.I took that to mean I must take the weight in tons variable that the dumpster collects multiply that by 500 and divide it by 30 to find the number of Homes powered by each dumpster.
+mr_trash_wheel =
+  mutate(
+    mr_trash_wheel, homes_powered = (weight_tons*500)/30)
+
+
+
+# I am using a similar process as I detailed above to import, clean and organize the data for the Gwynda Trash Wheel. One difference though is the fact that the homes_powered variable in this data frame is correct and applied for all rows in the data frame unlike in Mr Trash Wheel. 
+gwynda_trash_wheel = 
+  readxl::read_excel(
+    here("Gwynda Trash Wheel.xlsx"), sheet = NULL, range = "A2:L157", col_names = TRUE, col_types = NULL, na = "NA",   trim_ws = TRUE) 
+gwynda_trash_wheel = janitor::clean_names(gwynda_trash_wheel)
+
+#Just to be safe though I will be applying the same mutate argument to the homes_powered variables.
+
+gwynda_trash_wheel =
+  mutate(
+    gwynda_trash_wheel, homes_powered = (weight_tons*500)/30)
+
+
+# Lastly I will follow the same process for Professor Trash Wheel
+
+professor_trash_wheel = 
+  readxl::read_excel(
+    here("Professor Trash Wheel.xlsx"), sheet = NULL, range = "A2:M108", col_names = TRUE, col_types = NULL, na = "NA",   trim_ws = TRUE) 
+professor_trash_wheel = janitor::clean_names(professor_trash_wheel) |>
+  mutate(
+    professor_trash_wheel, homes_powered = (weight_tons*500)/30)
+
+summary(mr_trash_wheel)
+summary(gwynda_trash_wheel)
+summary(professor_trash_wheel)
+```
+

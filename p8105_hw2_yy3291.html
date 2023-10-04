@@ -368,7 +368,7 @@ month_df =
     month = month.name
   )
 
-# I need to figure out a good reltive path for my files using the here package
+# I need to figure out a good relative path for my files using the here package
 
 here()</code></pre>
 <pre><code>## [1] &quot;/Users/youssrayemmas/Documents/P8105/p8105_hw2_yy3291/p8105_hw2_yy3291&quot;</code></pre>
@@ -533,6 +533,171 @@ data shows a minimum unemployment percentage of 2.5 and a maximum of
 10.8. The combined data set, data_538 has 822 observations of 13
 variables with data from the years 1947 to 2015.</h3>
 </div>
+</div>
+<div id="problem-2" class="section level1">
+<h1>Problem 2</h1>
+<pre class="r"><code># Here I am reading the excel file that contains the data on Mr Trash Can dumpster. I am using the arguments in read_excel specifically range to exclude the two columns 15 and 16 that contain irrelevant notes, I am also using the range argument to exclude the bottom row that contains summary figures. 
+mr_trash_wheel = 
+  readxl::read_excel(
+    here(&quot;Mr Trash Wheel.xlsx&quot;), sheet = NULL, range = &quot;A2:N586&quot;, col_names = TRUE, col_types = NULL, na = &quot;NA&quot;,   trim_ws = TRUE) 
+mr_trash_wheel = janitor::clean_names(mr_trash_wheel)
+
+# Here I am fixing the homes_powered variable so that it is applied ot every row in the dataset because before there were many 0&#39;s. From the Homes powered note that states each ton of trash equates to on average 500 kilowatts of electricity.  An average household will use 30 kilowatts per day.I took that to mean I must take the weight in tons variable that the dumpster collects multiply that by 500 and divide it by 30 to find the number of Homes powered by each dumpster.
+mr_trash_wheel =
+  mutate(
+    mr_trash_wheel, homes_powered = (weight_tons*500)/30)
+
+
+
+# I am using a similar process as I detailed above to import, clean and organize the data for the Gwynda Trash Wheel. One difference though is the fact that the homes_powered variable in this data frame is correct and applied for all rows in the data frame unlike in Mr Trash Wheel. 
+gwynda_trash_wheel = 
+  readxl::read_excel(
+    here(&quot;Gwynda Trash Wheel.xlsx&quot;), sheet = NULL, range = &quot;A2:L157&quot;, col_names = TRUE, col_types = NULL, na = &quot;NA&quot;,   trim_ws = TRUE) 
+gwynda_trash_wheel = janitor::clean_names(gwynda_trash_wheel)
+
+#Just to be safe though I will be applying the same mutate argument to the homes_powered variables.
+
+gwynda_trash_wheel =
+  mutate(
+    gwynda_trash_wheel, homes_powered = (weight_tons*500)/30)
+
+
+# Lastly I will follow the same process for Professor Trash Wheel
+
+professor_trash_wheel = 
+  readxl::read_excel(
+    here(&quot;Professor Trash Wheel.xlsx&quot;), sheet = NULL, range = &quot;A2:M108&quot;, col_names = TRUE, col_types = NULL, na = &quot;NA&quot;,   trim_ws = TRUE) 
+professor_trash_wheel = janitor::clean_names(professor_trash_wheel) |&gt;
+  mutate(
+    professor_trash_wheel, homes_powered = (weight_tons*500)/30)
+
+summary(mr_trash_wheel)</code></pre>
+<pre><code>##     dumpster        month               year          
+##  Min.   :  1.0   Length:584         Length:584        
+##  1st Qu.:146.8   Class :character   Class :character  
+##  Median :292.5   Mode  :character   Mode  :character  
+##  Mean   :292.5                                        
+##  3rd Qu.:438.2                                        
+##  Max.   :584.0                                        
+##       date                         weight_tons    volume_cubic_yards
+##  Min.   :1900-01-20 00:00:00.00   Min.   :0.780   Min.   : 7.0      
+##  1st Qu.:2016-07-28 18:00:00.00   1st Qu.:2.720   1st Qu.:15.0      
+##  Median :2018-09-01 00:00:00.00   Median :3.195   Median :15.0      
+##  Mean   :2018-07-23 03:36:59.18   Mean   :3.211   Mean   :15.3      
+##  3rd Qu.:2020-11-17 12:00:00.00   3rd Qu.:3.730   3rd Qu.:15.0      
+##  Max.   :2023-06-29 00:00:00.00   Max.   :5.620   Max.   :20.0      
+##  plastic_bottles  polystyrene   cigarette_butts  glass_bottles   
+##  Min.   : 210    Min.   :  48   Min.   :   900   Min.   :  0.00  
+##  1st Qu.:1000    1st Qu.: 555   1st Qu.:  3900   1st Qu.: 10.00  
+##  Median :1900    Median :1160   Median :  6500   Median : 18.00  
+##  Mean   :1979    Mean   :1558   Mean   : 19833   Mean   : 21.62  
+##  3rd Qu.:2780    3rd Qu.:2400   3rd Qu.: 24000   3rd Qu.: 30.00  
+##  Max.   :5960    Max.   :6540   Max.   :310000   Max.   :110.00  
+##   plastic_bags       wrappers     sports_balls   homes_powered  
+##  Min.   :  24.0   Min.   : 180   Min.   : 0.00   Min.   :13.00  
+##  1st Qu.: 290.0   1st Qu.: 750   1st Qu.: 6.00   1st Qu.:45.33  
+##  Median : 635.0   Median :1100   Median :11.00   Median :53.25  
+##  Mean   : 916.8   Mean   :1416   Mean   :13.17   Mean   :53.51  
+##  3rd Qu.:1242.0   3rd Qu.:1980   3rd Qu.:18.25   3rd Qu.:62.17  
+##  Max.   :3750.0   Max.   :5085   Max.   :56.00   Max.   :93.67</code></pre>
+<pre class="r"><code>summary(gwynda_trash_wheel)</code></pre>
+<pre><code>##     dumpster         month                year     
+##  Min.   :  1.00   Length:155         Min.   :2021  
+##  1st Qu.: 38.50   Class :character   1st Qu.:2021  
+##  Median : 77.00   Mode  :character   Median :2022  
+##  Mean   : 77.14                      Mean   :2022  
+##  3rd Qu.:115.50                      3rd Qu.:2022  
+##  Max.   :154.00                      Max.   :2023  
+##                                                    
+##       date                         weight_tons    volume_cubic_yards
+##  Min.   :2021-07-03 00:00:00.00   Min.   :0.770   Min.   : 5.0      
+##  1st Qu.:2021-11-03 12:00:00.00   1st Qu.:2.585   1st Qu.:15.0      
+##  Median :2022-06-10 00:00:00.00   Median :3.000   Median :15.0      
+##  Mean   :2022-05-20 20:44:54.19   Mean   :2.914   Mean   :14.9      
+##  3rd Qu.:2022-10-11 12:00:00.00   3rd Qu.:3.335   3rd Qu.:15.0      
+##  Max.   :2023-06-30 00:00:00.00   Max.   :4.180   Max.   :15.0      
+##                                                                     
+##  plastic_bottles  polystyrene    cigarette_butts  plastic_bags   
+##  Min.   :   0    Min.   :  0.0   Min.   :   0    Min.   :   0.0  
+##  1st Qu.: 640    1st Qu.: 77.5   1st Qu.:1150    1st Qu.: 190.0  
+##  Median :1200    Median :180.0   Median :2200    Median : 360.0  
+##  Mean   :1495    Mean   :170.7   Mean   :2368    Mean   : 788.8  
+##  3rd Qu.:2100    3rd Qu.:240.0   3rd Qu.:3350    3rd Qu.:1200.0  
+##  Max.   :5400    Max.   :540.0   Max.   :6400    Max.   :3600.0  
+##                                                                  
+##     wrappers    homes_powered  
+##  Min.   : 540   Min.   :12.83  
+##  1st Qu.:1000   1st Qu.:43.08  
+##  Median :1400   Median :50.00  
+##  Mean   :1554   Mean   :48.56  
+##  3rd Qu.:2075   3rd Qu.:55.58  
+##  Max.   :3500   Max.   :69.67  
+##  NA&#39;s   :117</code></pre>
+<pre class="r"><code>summary(professor_trash_wheel)</code></pre>
+<pre><code>##     dumpster         month                year     
+##  Min.   :  1.00   Length:106         Min.   :2017  
+##  1st Qu.: 27.25   Class :character   1st Qu.:2018  
+##  Median : 53.50   Mode  :character   Median :2019  
+##  Mean   : 53.50                      Mean   :2019  
+##  3rd Qu.: 79.75                      3rd Qu.:2021  
+##  Max.   :106.00                      Max.   :2023  
+##                                                    
+##       date                         weight_tons    volume_cubic_yards
+##  Min.   :2017-01-02 00:00:00.00   Min.   :0.610   Min.   : 6.00     
+##  1st Qu.:2018-05-31 18:00:00.00   1st Qu.:1.610   1st Qu.:15.00     
+##  Median :2019-08-13 00:00:00.00   Median :1.975   Median :15.00     
+##  Mean   :2019-12-12 16:31:41.89   Mean   :2.040   Mean   :14.58     
+##  3rd Qu.:2021-07-29 00:00:00.00   3rd Qu.:2.487   3rd Qu.:15.00     
+##  Max.   :2023-06-29 00:00:00.00   Max.   :3.720   Max.   :18.00     
+##                                                                     
+##  plastic_bottles  polystyrene    cigarette_butts glass_bottles  
+##  Min.   : 657    Min.   :  180   Min.   : 3800   Min.   : 0.00  
+##  1st Qu.:3800    1st Qu.:  980   1st Qu.: 6400   1st Qu.: 8.00  
+##  Median :4900    Median : 3750   Median : 8800   Median :14.00  
+##  Mean   :5244    Mean   : 4194   Mean   :11531   Mean   :16.81  
+##  3rd Qu.:7200    3rd Qu.: 7650   3rd Qu.:15000   3rd Qu.:24.00  
+##  Max.   :9830    Max.   :11528   Max.   :33320   Max.   :48.00  
+##  NA&#39;s   :1       NA&#39;s   :1       NA&#39;s   :1       NA&#39;s   :1      
+##   plastic_bags      wrappers     homes_powered      Dumpster     
+##  Min.   :  140   Min.   : 2300   Min.   :10.17   Min.   :  1.00  
+##  1st Qu.:  720   1st Qu.: 4400   1st Qu.:26.83   1st Qu.: 27.25  
+##  Median : 1040   Median : 5800   Median :32.92   Median : 53.50  
+##  Mean   : 2433   Mean   : 7695   Mean   :34.00   Mean   : 53.50  
+##  3rd Qu.: 1870   3rd Qu.: 9800   3rd Qu.:41.46   3rd Qu.: 79.75  
+##  Max.   :13450   Max.   :20100   Max.   :62.00   Max.   :106.00  
+##  NA&#39;s   :1       NA&#39;s   :1                                       
+##     Month                Year           Date                       
+##  Length:106         Min.   :2017   Min.   :2017-01-02 00:00:00.00  
+##  Class :character   1st Qu.:2018   1st Qu.:2018-05-31 18:00:00.00  
+##  Mode  :character   Median :2019   Median :2019-08-13 00:00:00.00  
+##                     Mean   :2019   Mean   :2019-12-12 16:31:41.89  
+##                     3rd Qu.:2021   3rd Qu.:2021-07-29 00:00:00.00  
+##                     Max.   :2023   Max.   :2023-06-29 00:00:00.00  
+##                                                                    
+##  Weight (tons)   Volume (cubic yards) Plastic Bottles  Polystyrene   
+##  Min.   :0.610   Min.   : 6.00        Min.   : 657    Min.   :  180  
+##  1st Qu.:1.610   1st Qu.:15.00        1st Qu.:3800    1st Qu.:  980  
+##  Median :1.975   Median :15.00        Median :4900    Median : 3750  
+##  Mean   :2.040   Mean   :14.58        Mean   :5244    Mean   : 4194  
+##  3rd Qu.:2.487   3rd Qu.:15.00        3rd Qu.:7200    3rd Qu.: 7650  
+##  Max.   :3.720   Max.   :18.00        Max.   :9830    Max.   :11528  
+##                                       NA&#39;s   :1       NA&#39;s   :1      
+##  Cigarette Butts Glass Bottles    Plastic Bags      Wrappers    
+##  Min.   : 3800   Min.   : 0.00   Min.   :  140   Min.   : 2300  
+##  1st Qu.: 6400   1st Qu.: 8.00   1st Qu.:  720   1st Qu.: 4400  
+##  Median : 8800   Median :14.00   Median : 1040   Median : 5800  
+##  Mean   :11531   Mean   :16.81   Mean   : 2433   Mean   : 7695  
+##  3rd Qu.:15000   3rd Qu.:24.00   3rd Qu.: 1870   3rd Qu.: 9800  
+##  Max.   :33320   Max.   :48.00   Max.   :13450   Max.   :20100  
+##  NA&#39;s   :1       NA&#39;s   :1       NA&#39;s   :1       NA&#39;s   :1      
+##  Homes Powered* 
+##  Min.   :10.17  
+##  1st Qu.:26.71  
+##  Median :32.92  
+##  Mean   :34.00  
+##  3rd Qu.:41.54  
+##  Max.   :62.00  
+##  NA&#39;s   :2</code></pre>
 </div>
 
 
