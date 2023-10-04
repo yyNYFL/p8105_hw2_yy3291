@@ -1,0 +1,84 @@
+---
+title: "Homework 2"
+author: "Youssra Yemmas"
+date: "2023-10-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readxl)
+library(here)
+library(readr)
+```
+
+
+## Problem 1
+
+```{r}
+# first need to create a month data frame so that the mon variable can be broken up into 3 integer variables of month day and year
+
+month_df = 
+  tibble(
+    month_num = 1:12,
+    month_abb = month.abb,
+    month = month.name
+  )
+
+# I need to figure out a good reltive path for my files using the here package
+
+here()
+here::here("pols-month.csv")
+
+# Now I will read the pols-month data, use the separate function to break up the mon variable and replace month number with month name. I also removed the prez_gop and prez_dem vriables and replaced them with a president variable with values 0 to represent dem and 1 and 2 to represent gop. 
+
+pols = 
+  readr::read_csv(
+    here("pols-month.csv")) |>
+  separate(mon, into = c("year", "month_num", "day"), convert = TRUE) |>
+  mutate(
+    president = recode(prez_gop, "0" = "dem", "1" = "gop", "2" = "gop")) |>
+  left_join(x = _, y = month_df) |> 
+  select(year, month, everything(), -day, -starts_with("prez"))
+
+# I will read in the snp data and clean it to match the pols dataframe 
+
+snp = 
+  readr::read_csv(
+    here("snp.csv"),
+    col_types = cols(date = col_date(format = "%m/%d/%y"))) |>
+  separate(date, into = c("year", "month_num", "day"), convert = TRUE) |>
+  mutate(
+    year = if_else(year > 2023, year - 100, year)) |> 
+  left_join(x = _, y = month_df) |> 
+  select(year, month, close) 
+
+# Tidying the unemployment dataset to match the other two so that they can all be merged together.
+
+unemployment = 
+  readr::read_csv(
+    here("unemployment.csv")) |>
+  rename(year = Year) |>
+  pivot_longer(
+    Jan:Dec, 
+    names_to = "month_abb",
+    values_to = "unemployment"
+  ) |> 
+  left_join(x = _, y = month_df) |> 
+  select(year, month, unemployment)
+
+# Finally merging the three datasets into one data set titled data_538 
+data_538 = 
+  left_join(pols, snp) |>
+  left_join(x = _, y = unemployment)
+
+str(data_538)
+view(data_538)
+summary(pols)
+summary(snp)
+summary(unemployment)
+summary(data_538)
+```
+
+### The combined dataset, data_538, has merged the pols data, which provides information on the number of national politicians who are democratic or republican at any given time, the snp data, which is related to Standard & Poor’s stock market index (S&P), often used as a representative measure of stock market as a whole, and the unemployment data which contains information on the percentage of unemployment in a given month of an assocaited year. The first thing I notice upon viewing the data is that there are quite a few NA's or missing variables in the variables close and unemployment (36 and 12 respectively). In the snp data frame there are 787 observations of 3 variables and the year vriable contains values from 1950 to 2015 and the close variables which represents the closing values of the S&P stock index at a given data has a min of 17.05 a median of 138.53 and a max of 2107.39. The pols datafram has 822 observations of 11 variables with data from the years 1947 to 2015. The unemployment data frame has 816 observations of 3 variables with data from the years 1948 to 2015. The data shows a minimum unemployment percentage of 2.5 and a maximum of 10.8. The combined data set, data_538 has 822 observations of 13 variables with data from the years 1947 to 2015.
