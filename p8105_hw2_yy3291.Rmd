@@ -188,6 +188,38 @@ median(mci_baseline$`Age at onset`)
 # I can see from the above code that I now the variables sex and APOE4 are encoded as character variables rather than numeric. There are 483 observations of the 6 variables which means that there are 483 participants that have been recruited. Using the filter function I can see that of the participants recruited 145 of them are carrier for apoe4 variant. There are 211 women and 63 of those women are apoe4 carriers which is a proportion of about 0.3.
 
 
-# I will be using a similar process to import, read and tidy the data for 
+# I will be using a similar process to import, read and tidy the data for the mci amyloid data of longitudinally observed biomarker values
+
+here::here("mci_amyloid.csv")
+mci_amyloid =
+  readr::read_csv(
+    here("mci_amyloid.csv"), skip = 1, col_names = TRUE, na = "NA", col_types = cols(
+      "Study ID" = col_character(),
+      "Baseline" = col_double(),
+      "Time 2" = col_double(),
+      "Time 4" = col_double(),
+      "Time 6" = col_double(),
+      "Time 8" = col_double()
+    )
+    )
+
+skimr::skim(mci_amyloid)
+
+# This data set has longitudinal measures of biomarkers so it has the baseline measure and then follows the same individuals over 4 time periods. Looking at the medians of the baseline and then each time period using the skim function I can see that the biomarker levels decrease slightly over time-going from 0.111 to 0.110 to 0.109 and 0.108 but this is very subtle. If study ID number being the same across both datasets indicates it is the same participants than we can see that the first 483 participants in the mci_baseline dataset are in common with the mci_amyloid dataset.
+
+# I will be merging the two datasets 
+mci_amyloid <- mci_amyloid |>
+  rename("ID" = "Study ID")
+mci_total = 
+  left_join(mci_baseline, mci_amyloid, by = join_by("ID"))
+
+summary(mci_total)
+# I have the resultant dataset titled mci_total it contains 483 observations and 11 variables. The Minimum age is 56 and the Maximum age is 72.9, the minimum years of education is 12 with the maximum being 20 and the minimum age of onset is 61.2. 
+
+```
+
+# Saving the total dataframe
+```{r}
+readr::write_csv(mci_total, file = "mci_total.csv")
 ```
 

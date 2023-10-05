@@ -1098,7 +1098,240 @@ skimr::skim(mci_baseline)</code></pre>
 <pre class="r"><code># I can see from the above code that I now the variables sex and APOE4 are encoded as character variables rather than numeric. There are 483 observations of the 6 variables which means that there are 483 participants that have been recruited. Using the filter function I can see that of the participants recruited 145 of them are carrier for apoe4 variant. There are 211 women and 63 of those women are apoe4 carriers which is a proportion of about 0.3.
 
 
-# I will be using a similar process to import, read and tidy the data for </code></pre>
+# I will be using a similar process to import, read and tidy the data for the mci amyloid data of longitudinally observed biomarker values
+
+here::here(&quot;mci_amyloid.csv&quot;)</code></pre>
+<pre><code>## [1] &quot;/Users/youssrayemmas/Documents/P8105/p8105_hw2_yy3291/p8105_hw2_yy3291/mci_amyloid.csv&quot;</code></pre>
+<pre class="r"><code>mci_amyloid =
+  readr::read_csv(
+    here(&quot;mci_amyloid.csv&quot;), skip = 1, col_names = TRUE, na = &quot;NA&quot;, col_types = cols(
+      &quot;Study ID&quot; = col_character(),
+      &quot;Baseline&quot; = col_double(),
+      &quot;Time 2&quot; = col_double(),
+      &quot;Time 4&quot; = col_double(),
+      &quot;Time 6&quot; = col_double(),
+      &quot;Time 8&quot; = col_double()
+    )
+    )</code></pre>
+<pre><code>## Warning: One or more parsing issues, call `problems()` on your data frame for details,
+## e.g.:
+##   dat &lt;- vroom(...)
+##   problems(dat)</code></pre>
+<pre class="r"><code>skimr::skim(mci_amyloid)</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">mci_amyloid</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">487</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">6</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">5</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<colgroup>
+<col width="19%" />
+<col width="13%" />
+<col width="19%" />
+<col width="5%" />
+<col width="5%" />
+<col width="8%" />
+<col width="12%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Study ID</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">487</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<colgroup>
+<col width="18%" />
+<col width="13%" />
+<col width="18%" />
+<col width="6%" />
+<col width="3%" />
+<col width="5%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="7%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Baseline</td>
+<td align="right">2</td>
+<td align="right">1.00</td>
+<td align="right">0.11</td>
+<td align="right">0</td>
+<td align="right">0.1</td>
+<td align="right">0.11</td>
+<td align="right">0.11</td>
+<td align="right">0.11</td>
+<td align="right">0.12</td>
+<td align="left">▁▃▇▇▂</td>
+</tr>
+<tr class="even">
+<td align="left">Time 2</td>
+<td align="right">50</td>
+<td align="right">0.90</td>
+<td align="right">0.11</td>
+<td align="right">0</td>
+<td align="right">0.1</td>
+<td align="right">0.11</td>
+<td align="right">0.11</td>
+<td align="right">0.11</td>
+<td align="right">0.12</td>
+<td align="left">▂▅▇▃▁</td>
+</tr>
+<tr class="odd">
+<td align="left">Time 4</td>
+<td align="right">43</td>
+<td align="right">0.91</td>
+<td align="right">0.11</td>
+<td align="right">0</td>
+<td align="right">0.1</td>
+<td align="right">0.11</td>
+<td align="right">0.11</td>
+<td align="right">0.11</td>
+<td align="right">0.12</td>
+<td align="left">▁▃▇▅▁</td>
+</tr>
+<tr class="even">
+<td align="left">Time 6</td>
+<td align="right">39</td>
+<td align="right">0.92</td>
+<td align="right">0.11</td>
+<td align="right">0</td>
+<td align="right">0.1</td>
+<td align="right">0.11</td>
+<td align="right">0.11</td>
+<td align="right">0.11</td>
+<td align="right">0.12</td>
+<td align="left">▁▆▇▅▁</td>
+</tr>
+<tr class="odd">
+<td align="left">Time 8</td>
+<td align="right">38</td>
+<td align="right">0.92</td>
+<td align="right">0.11</td>
+<td align="right">0</td>
+<td align="right">0.1</td>
+<td align="right">0.11</td>
+<td align="right">0.11</td>
+<td align="right">0.11</td>
+<td align="right">0.12</td>
+<td align="left">▁▃▇▇▂</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># This data set has longitudinal measures of biomarkers so it has the baseline measure and then follows the same individuals over 4 time periods. Looking at the medians of the baseline and then each time period using the skim function I can see that the biomarker levels decrease slightly over time-going from 0.111 to 0.110 to 0.109 and 0.108 but this is very subtle. If study ID number being the same across both datasets indicates it is the same participants than we can see that the first 483 participants in the mci_baseline dataset are in common with the mci_amyloid dataset.
+
+# I will be merging the two datasets 
+mci_amyloid &lt;- mci_amyloid |&gt;
+  rename(&quot;ID&quot; = &quot;Study ID&quot;)
+mci_total = 
+  left_join(mci_baseline, mci_amyloid, by = join_by(&quot;ID&quot;))
+
+summary(mci_total)</code></pre>
+<pre><code>##       ID             Current Age        Sex              Education   
+##  Length:483         Min.   :56.00   Length:483         Min.   :12.0  
+##  Class :character   1st Qu.:63.15   Class :character   1st Qu.:16.0  
+##  Mode  :character   Median :64.90   Mode  :character   Median :16.0  
+##                     Mean   :65.05                      Mean   :16.4  
+##                     3rd Qu.:67.00                      3rd Qu.:18.0  
+##                     Max.   :72.90                      Max.   :20.0  
+##                                                                      
+##     apoe4            Age at onset      Baseline          Time 2      
+##  Length:483         Min.   :61.20   Min.   :0.1015   Min.   :0.1025  
+##  Class :character   1st Qu.:68.00   1st Qu.:0.1090   1st Qu.:0.1083  
+##  Mode  :character   Median :70.20   Median :0.1111   Median :0.1105  
+##                     Mean   :70.26   Mean   :0.1110   Mean   :0.1103  
+##                     3rd Qu.:73.10   3rd Qu.:0.1131   3rd Qu.:0.1122  
+##                     Max.   :77.20   Max.   :0.1184   Max.   :0.1187  
+##                     NA&#39;s   :386     NA&#39;s   :9        NA&#39;s   :58      
+##      Time 4           Time 6           Time 8       
+##  Min.   :0.1010   Min.   :0.1005   Min.   :0.09938  
+##  1st Qu.:0.1080   1st Qu.:0.1068   1st Qu.:0.10614  
+##  Median :0.1099   Median :0.1088   Median :0.10842  
+##  Mean   :0.1100   Mean   :0.1089   Mean   :0.10824  
+##  3rd Qu.:0.1120   3rd Qu.:0.1112   3rd Qu.:0.11047  
+##  Max.   :0.1180   Max.   :0.1180   Max.   :0.11586  
+##  NA&#39;s   :50       NA&#39;s   :47       NA&#39;s   :45</code></pre>
+<pre class="r"><code># I have the resultant dataset titled mci_total it contains 483 observations and 11 variables. The Minimum age is 56 and the Maximum age is 72.9, the minimum years of education is 12 with the maximum being 20 and the minimum age of onset is 61.2. </code></pre>
+</div>
+<div id="saving-the-total-dataframe" class="section level1">
+<h1>Saving the total dataframe</h1>
+<pre class="r"><code>readr::write_csv(mci_total, file = &quot;mci_total.csv&quot;)</code></pre>
 </div>
 
 
