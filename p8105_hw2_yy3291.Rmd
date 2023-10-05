@@ -130,7 +130,27 @@ sum_cb <- filter(gwynda_trash_wheel, year == 2021, month == "July")
 sum(sum_cb$cigarette_butts)
 # In July of 2021 the total number of cigarette bitts collected by the Gwynnda Trash Wheel was 163,000.
 
+#Adding a new variable to each dataset to indicate which trash wheel it is coming from which may come in handy when trying to merge the datasets into on large one. I am using 1 to refer to Mr Trash, 2 to refer to Gywnda and 3 to refer to Professor 
+mr_trash_wheel =
+  mutate(
+    mr_trash_wheel, trash_wheel = 1)
 
+gwynda_trash_wheel = 
+  mutate(
+    gwynda_trash_wheel, trash_wheel = 2
+  )
+
+professor_trash_wheel = 
+  mutate(
+    professor_trash_wheel, trash_wheel = 3
+  )
+is.numeric(professor_trash_wheel$year)
+
+wheels_tidy = 
+ left_join(gwynda_trash_wheel, professor_trash_wheel, by = join_by("dumpster")) |>
+  right_join(x = _, y = mr_trash_wheel, by = join_by("dumpster"))
+
+view(wheels_tidy)
 ```
 
 ### 
