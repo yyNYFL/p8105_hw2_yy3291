@@ -726,10 +726,379 @@ is.numeric(professor_trash_wheel$year)</code></pre>
  left_join(gwynda_trash_wheel, professor_trash_wheel, by = join_by(&quot;dumpster&quot;)) |&gt;
   right_join(x = _, y = mr_trash_wheel, by = join_by(&quot;dumpster&quot;))
 
-view(wheels_tidy)</code></pre>
-<div id="section" class="section level3">
-<h3></h3>
+view(wheels_tidy)
+summary(wheels_tidy)</code></pre>
+<pre><code>##     dumpster     month.x              year.x    
+##  Min.   :  1   Length:585         Min.   :2021  
+##  1st Qu.:146   Class :character   1st Qu.:2021  
+##  Median :292   Mode  :character   Median :2022  
+##  Mean   :292                      Mean   :2022  
+##  3rd Qu.:438                      3rd Qu.:2022  
+##  Max.   :584                      Max.   :2023  
+##                                   NA&#39;s   :430   
+##      date.x                       weight_tons.x   volume_cubic_yards.x
+##  Min.   :2021-07-03 00:00:00.00   Min.   :0.770   Min.   : 5.0        
+##  1st Qu.:2021-11-03 12:00:00.00   1st Qu.:2.585   1st Qu.:15.0        
+##  Median :2022-06-10 00:00:00.00   Median :3.000   Median :15.0        
+##  Mean   :2022-05-20 20:44:54.19   Mean   :2.914   Mean   :14.9        
+##  3rd Qu.:2022-10-11 12:00:00.00   3rd Qu.:3.335   3rd Qu.:15.0        
+##  Max.   :2023-06-30 00:00:00.00   Max.   :4.180   Max.   :15.0        
+##  NA&#39;s   :430                      NA&#39;s   :430     NA&#39;s   :430         
+##  plastic_bottles.x polystyrene.x   cigarette_butts.x plastic_bags.x  
+##  Min.   :   0      Min.   :  0.0   Min.   :   0      Min.   :   0.0  
+##  1st Qu.: 640      1st Qu.: 77.5   1st Qu.:1150      1st Qu.: 190.0  
+##  Median :1200      Median :180.0   Median :2200      Median : 360.0  
+##  Mean   :1495      Mean   :170.7   Mean   :2368      Mean   : 788.8  
+##  3rd Qu.:2100      3rd Qu.:240.0   3rd Qu.:3350      3rd Qu.:1200.0  
+##  Max.   :5400      Max.   :540.0   Max.   :6400      Max.   :3600.0  
+##  NA&#39;s   :430       NA&#39;s   :430     NA&#39;s   :430       NA&#39;s   :430     
+##    wrappers.x   homes_powered.x trash_wheel.x   month.y              year.y    
+##  Min.   : 540   Min.   :12.83   Min.   :2     Length:585         Min.   :2017  
+##  1st Qu.:1000   1st Qu.:43.08   1st Qu.:2     Class :character   1st Qu.:2018  
+##  Median :1400   Median :50.00   Median :2     Mode  :character   Median :2019  
+##  Mean   :1554   Mean   :48.56   Mean   :2                        Mean   :2019  
+##  3rd Qu.:2075   3rd Qu.:55.58   3rd Qu.:2                        3rd Qu.:2021  
+##  Max.   :3500   Max.   :69.67   Max.   :2                        Max.   :2023  
+##  NA&#39;s   :547    NA&#39;s   :430     NA&#39;s   :430                      NA&#39;s   :478   
+##      date.y                       weight_tons.y   volume_cubic_yards.y
+##  Min.   :2017-01-02 00:00:00.00   Min.   :0.610   Min.   : 6.00       
+##  1st Qu.:2018-05-13 12:00:00.00   1st Qu.:1.595   1st Qu.:15.00       
+##  Median :2019-08-02 00:00:00.00   Median :1.970   Median :15.00       
+##  Mean   :2019-12-06 12:33:38.69   Mean   :2.033   Mean   :14.59       
+##  3rd Qu.:2021-07-24 00:00:00.00   3rd Qu.:2.485   3rd Qu.:15.00       
+##  Max.   :2023-06-29 00:00:00.00   Max.   :3.720   Max.   :18.00       
+##  NA&#39;s   :478                      NA&#39;s   :478     NA&#39;s   :478         
+##  plastic_bottles.y polystyrene.y   cigarette_butts.y glass_bottles.x
+##  Min.   : 657      Min.   :  180   Min.   : 3800     Min.   : 0.00  
+##  1st Qu.:3725      1st Qu.:  985   1st Qu.: 6500     1st Qu.: 8.00  
+##  Median :4900      Median : 3675   Median : 8900     Median :14.00  
+##  Mean   :5216      Mean   : 4188   Mean   :11621     Mean   :16.68  
+##  3rd Qu.:7142      3rd Qu.: 7572   3rd Qu.:15000     3rd Qu.:24.00  
+##  Max.   :9830      Max.   :11528   Max.   :33320     Max.   :48.00  
+##  NA&#39;s   :479       NA&#39;s   :479     NA&#39;s   :479       NA&#39;s   :479    
+##  plastic_bags.y      wrappers.y    homes_powered.y    Dumpster    
+##  Min.   :  140.0   Min.   : 2300   Min.   :10.17   Min.   :  1.0  
+##  1st Qu.:  727.5   1st Qu.: 4400   1st Qu.:26.58   1st Qu.: 26.5  
+##  Median : 1045.0   Median : 5800   Median :32.83   Median : 53.0  
+##  Mean   : 2427.0   Mean   : 7780   Mean   :33.88   Mean   : 53.2  
+##  3rd Qu.: 1852.5   3rd Qu.:10100   3rd Qu.:41.42   3rd Qu.: 79.5  
+##  Max.   :13450.0   Max.   :20100   Max.   :62.00   Max.   :106.0  
+##  NA&#39;s   :479       NA&#39;s   :479     NA&#39;s   :478     NA&#39;s   :478    
+##     Month                Year           Date                       
+##  Length:585         Min.   :2017   Min.   :2017-01-02 00:00:00.00  
+##  Class :character   1st Qu.:2018   1st Qu.:2018-05-13 12:00:00.00  
+##  Mode  :character   Median :2019   Median :2019-08-02 00:00:00.00  
+##                     Mean   :2019   Mean   :2019-12-06 12:33:38.69  
+##                     3rd Qu.:2021   3rd Qu.:2021-07-24 00:00:00.00  
+##                     Max.   :2023   Max.   :2023-06-29 00:00:00.00  
+##                     NA&#39;s   :478    NA&#39;s   :478                     
+##  Weight (tons)   Volume (cubic yards) Plastic Bottles  Polystyrene   
+##  Min.   :0.610   Min.   : 6.00        Min.   : 657    Min.   :  180  
+##  1st Qu.:1.595   1st Qu.:15.00        1st Qu.:3725    1st Qu.:  985  
+##  Median :1.970   Median :15.00        Median :4900    Median : 3675  
+##  Mean   :2.033   Mean   :14.59        Mean   :5216    Mean   : 4188  
+##  3rd Qu.:2.485   3rd Qu.:15.00        3rd Qu.:7142    3rd Qu.: 7572  
+##  Max.   :3.720   Max.   :18.00        Max.   :9830    Max.   :11528  
+##  NA&#39;s   :478     NA&#39;s   :478          NA&#39;s   :479     NA&#39;s   :479    
+##  Cigarette Butts Glass Bottles    Plastic Bags        Wrappers    
+##  Min.   : 3800   Min.   : 0.00   Min.   :  140.0   Min.   : 2300  
+##  1st Qu.: 6500   1st Qu.: 8.00   1st Qu.:  727.5   1st Qu.: 4400  
+##  Median : 8900   Median :14.00   Median : 1045.0   Median : 5800  
+##  Mean   :11621   Mean   :16.68   Mean   : 2427.0   Mean   : 7780  
+##  3rd Qu.:15000   3rd Qu.:24.00   3rd Qu.: 1852.5   3rd Qu.:10100  
+##  Max.   :33320   Max.   :48.00   Max.   :13450.0   Max.   :20100  
+##  NA&#39;s   :479     NA&#39;s   :479     NA&#39;s   :479       NA&#39;s   :479    
+##  Homes Powered*  trash_wheel.y    month               year          
+##  Min.   :10.17   Min.   :3     Length:585         Length:585        
+##  1st Qu.:26.33   1st Qu.:3     Class :character   Class :character  
+##  Median :32.83   Median :3     Mode  :character   Mode  :character  
+##  Mean   :33.87   Mean   :3                                          
+##  3rd Qu.:41.50   3rd Qu.:3                                          
+##  Max.   :62.00   Max.   :3                                          
+##  NA&#39;s   :480     NA&#39;s   :478                                        
+##       date                         weight_tons   volume_cubic_yards
+##  Min.   :1900-01-20 00:00:00.00   Min.   :0.78   Min.   : 7.0      
+##  1st Qu.:2016-07-28 00:00:00.00   1st Qu.:2.72   1st Qu.:15.0      
+##  Median :2018-09-01 00:00:00.00   Median :3.19   Median :15.0      
+##  Mean   :2018-07-20 15:18:09.23   Mean   :3.21   Mean   :15.3      
+##  3rd Qu.:2020-11-13 00:00:00.00   3rd Qu.:3.73   3rd Qu.:15.0      
+##  Max.   :2023-06-29 00:00:00.00   Max.   :5.62   Max.   :20.0      
+##                                                                    
+##  plastic_bottles  polystyrene   cigarette_butts  glass_bottles.y 
+##  Min.   : 210    Min.   :  48   Min.   :   900   Min.   :  0.00  
+##  1st Qu.:1000    1st Qu.: 560   1st Qu.:  3900   1st Qu.: 10.00  
+##  Median :1900    Median :1170   Median :  6500   Median : 18.00  
+##  Mean   :1980    Mean   :1560   Mean   : 19990   Mean   : 21.64  
+##  3rd Qu.:2780    3rd Qu.:2400   3rd Qu.: 24000   3rd Qu.: 30.00  
+##  Max.   :5960    Max.   :6540   Max.   :310000   Max.   :110.00  
+##                                                                  
+##   plastic_bags       wrappers     sports_balls   homes_powered    trash_wheel
+##  Min.   :  24.0   Min.   : 180   Min.   : 0.00   Min.   :13.00   Min.   :1   
+##  1st Qu.: 290.0   1st Qu.: 750   1st Qu.: 6.00   1st Qu.:45.33   1st Qu.:1   
+##  Median : 640.0   Median :1100   Median :11.00   Median :53.17   Median :1   
+##  Mean   : 917.1   Mean   :1417   Mean   :13.16   Mean   :53.50   Mean   :1   
+##  3rd Qu.:1240.0   3rd Qu.:1980   3rd Qu.:18.00   3rd Qu.:62.17   3rd Qu.:1   
+##  Max.   :3750.0   Max.   :5085   Max.   :56.00   Max.   :93.67   Max.   :1   
+## </code></pre>
+<div id="the-combined-data-set-resulted-585-observations-of-40-variables.the-years-for-the-data-range-from-1900-to-2023.-the-weight-in-tons-of-garbage-the-dumpsters-have-collected-range-from-a-minimum-of-0.770-tons-to-4.180-tons.-one-interesting-statistics-was-that-a-max-number-of-homes-powered-by-an-amount-of-garbage-a-trash-wheel-has-collected-went-as-high-as-93-homes." class="section level3">
+<h3>The combined data set resulted 585 observations of 40 variables.The
+years for the data range from 1900 to 2023. The weight in tons of
+garbage the dumpsters have collected range from a minimum of 0.770 tons
+to 4.180 tons. One interesting statistics was that a max number of homes
+powered by an amount of garbage a trash wheel has collected went as high
+as 93 homes.</h3>
 </div>
+</div>
+<div id="problem-3" class="section level1">
+<h1>Problem 3</h1>
+<pre class="r"><code># I will need to first import the dataset of baseline demographics. I need to first do a relative file path using the here function
+
+here::here(&quot;MCI_baseline.csv&quot;)</code></pre>
+<pre><code>## [1] &quot;/Users/youssrayemmas/Documents/P8105/p8105_hw2_yy3291/p8105_hw2_yy3291/MCI_baseline.csv&quot;</code></pre>
+<pre class="r"><code>mci_baseline =
+  readr::read_csv(
+    here(&quot;MCI_baseline.csv&quot;), skip = 1, col_names = TRUE, na = &quot;.&quot;, col_types = cols(
+      ID = col_character(),
+      &quot;Current Age&quot; = col_double(),
+      &quot;Sex&quot; = col_character(),
+      &quot;Education&quot; = col_double(),
+      &quot;apoe4&quot; = col_character(),
+      &quot;Age at onset&quot; = col_number()
+    )
+  )
+## doint this make the names ugly so i need to get rid of it mci_baseline =
+  #janitor::clean_names(mci_baseline)
+
+# From viewing the dataset I notice that the variables sex and AP0E4 are not properly encoded so I will need to change that. I also need to look at the data more to see if anything else should be done so I will be doing that using the skimr package
+
+skimr::skim(mci_baseline)</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">mci_baseline</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">483</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">6</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">3</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<colgroup>
+<col width="19%" />
+<col width="13%" />
+<col width="19%" />
+<col width="5%" />
+<col width="5%" />
+<col width="8%" />
+<col width="12%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ID</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">483</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Sex</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">apoe4</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<colgroup>
+<col width="17%" />
+<col width="12%" />
+<col width="17%" />
+<col width="7%" />
+<col width="6%" />
+<col width="6%" />
+<col width="7%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="7%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Current Age</td>
+<td align="right">0</td>
+<td align="right">1.0</td>
+<td align="right">65.05</td>
+<td align="right">2.96</td>
+<td align="right">56.0</td>
+<td align="right">63.15</td>
+<td align="right">64.9</td>
+<td align="right">67.0</td>
+<td align="right">72.9</td>
+<td align="left">▁▃▇▆▁</td>
+</tr>
+<tr class="even">
+<td align="left">Education</td>
+<td align="right">0</td>
+<td align="right">1.0</td>
+<td align="right">16.40</td>
+<td align="right">2.04</td>
+<td align="right">12.0</td>
+<td align="right">16.00</td>
+<td align="right">16.0</td>
+<td align="right">18.0</td>
+<td align="right">20.0</td>
+<td align="left">▂▁▇▂▂</td>
+</tr>
+<tr class="odd">
+<td align="left">Age at onset</td>
+<td align="right">386</td>
+<td align="right">0.2</td>
+<td align="right">70.26</td>
+<td align="right">3.59</td>
+<td align="right">61.2</td>
+<td align="right">68.00</td>
+<td align="right">70.2</td>
+<td align="right">73.1</td>
+<td align="right">77.2</td>
+<td align="left">▂▃▇▅▅</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>is.character(mci_baseline$Sex)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>is.character(mci_baseline$apoe4)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>filter(mci_baseline, apoe4 == 1)</code></pre>
+<pre><code>## # A tibble: 145 × 6
+##    ID    `Current Age` Sex   Education apoe4 `Age at onset`
+##    &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;
+##  1 1              63.1 0            16 1               NA  
+##  2 2              65.6 0            20 1               NA  
+##  3 3              62.5 1            16 1               66.8
+##  4 13             63.1 1            12 1               69  
+##  5 19             67.5 1            16 1               NA  
+##  6 22             67.3 0            20 1               74.6
+##  7 26             64.8 0            20 1               71.1
+##  8 34             64.8 0            16 1               NA  
+##  9 39             68.3 0            16 1               70.2
+## 10 43             67.1 0            16 1               71.6
+## # ℹ 135 more rows</code></pre>
+<pre class="r"><code>filter(mci_baseline, Sex == 0, apoe4 == 1)</code></pre>
+<pre><code>## # A tibble: 63 × 6
+##    ID    `Current Age` Sex   Education apoe4 `Age at onset`
+##    &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;
+##  1 1              63.1 0            16 1               NA  
+##  2 2              65.6 0            20 1               NA  
+##  3 22             67.3 0            20 1               74.6
+##  4 26             64.8 0            20 1               71.1
+##  5 34             64.8 0            16 1               NA  
+##  6 39             68.3 0            16 1               70.2
+##  7 43             67.1 0            16 1               71.6
+##  8 47             66.1 0            12 1               NA  
+##  9 50             67.6 0            18 1               NA  
+## 10 52             63.2 0            16 1               NA  
+## # ℹ 53 more rows</code></pre>
+<pre class="r"><code>filter(mci_baseline, Sex == 0)</code></pre>
+<pre><code>## # A tibble: 211 × 6
+##    ID    `Current Age` Sex   Education apoe4 `Age at onset`
+##    &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;
+##  1 1              63.1 0            16 1               NA  
+##  2 2              65.6 0            20 1               NA  
+##  3 4              69.8 0            16 0               NA  
+##  4 8              67.2 0            18 0               NA  
+##  5 9              66.7 0            16 0               NA  
+##  6 10             64.1 0            18 0               NA  
+##  7 11             69.5 0            16 0               NA  
+##  8 12             66.2 0            18 0               NA  
+##  9 14             58.4 0            20 0               66.2
+## 10 16             64.9 0            16 0               NA  
+## # ℹ 201 more rows</code></pre>
+<pre class="r"><code>63/211</code></pre>
+<pre><code>## [1] 0.2985782</code></pre>
+<pre class="r"><code>median(mci_baseline$`Age at onset`)</code></pre>
+<pre><code>## [1] NA</code></pre>
+<pre class="r"><code># I can see from the above code that I now the variables sex and APOE4 are encoded as character variables rather than numeric. There are 483 observations of the 6 variables which means that there are 483 participants that have been recruited. Using the filter function I can see that of the participants recruited 145 of them are carrier for apoe4 variant. There are 211 women and 63 of those women are apoe4 carriers which is a proportion of about 0.3.
+
+
+# I will be using a similar process to import, read and tidy the data for </code></pre>
 </div>
 
 

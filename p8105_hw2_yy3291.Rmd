@@ -151,6 +151,43 @@ wheels_tidy =
   right_join(x = _, y = mr_trash_wheel, by = join_by("dumpster"))
 
 view(wheels_tidy)
+summary(wheels_tidy)
 ```
 
-### 
+### The combined data set resulted 585 observations of 40 variables.The years for the data range from 1900 to 2023. The weight in tons of garbage the dumpsters have collected range from a minimum of 0.770 tons to 4.180 tons. One interesting statistics was that a max number of homes powered by an amount of garbage a trash wheel has collected went as high as 93 homes. 
+
+# Problem 3
+```{r}
+# I will need to first import the dataset of baseline demographics. I need to first do a relative file path using the here function
+
+here::here("MCI_baseline.csv")
+mci_baseline =
+  readr::read_csv(
+    here("MCI_baseline.csv"), skip = 1, col_names = TRUE, na = ".", col_types = cols(
+      ID = col_character(),
+      "Current Age" = col_double(),
+      "Sex" = col_character(),
+      "Education" = col_double(),
+      "apoe4" = col_character(),
+      "Age at onset" = col_number()
+    )
+  )
+## doint this make the names ugly so i need to get rid of it mci_baseline =
+  #janitor::clean_names(mci_baseline)
+
+# From viewing the dataset I notice that the variables sex and AP0E4 are not properly encoded so I will need to change that. I also need to look at the data more to see if anything else should be done so I will be doing that using the skimr package
+
+skimr::skim(mci_baseline)
+is.character(mci_baseline$Sex)
+is.character(mci_baseline$apoe4)
+filter(mci_baseline, apoe4 == 1)
+filter(mci_baseline, Sex == 0, apoe4 == 1)
+filter(mci_baseline, Sex == 0)
+63/211
+median(mci_baseline$`Age at onset`)
+# I can see from the above code that I now the variables sex and APOE4 are encoded as character variables rather than numeric. There are 483 observations of the 6 variables which means that there are 483 participants that have been recruited. Using the filter function I can see that of the participants recruited 145 of them are carrier for apoe4 variant. There are 211 women and 63 of those women are apoe4 carriers which is a proportion of about 0.3.
+
+
+# I will be using a similar process to import, read and tidy the data for 
+```
+
